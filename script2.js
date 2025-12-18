@@ -1,59 +1,71 @@
-// Завдання 1: Консольне виведення
-console.log("Текст заголовка:", document.getElementById("header").innerText);
+// Завдання 2: Масив з реальними URL (на тему ІТ для вашого профілю)
+let images = [
+    "https://picsum.photos/id/1/200/200", // Laptop
+    "https://picsum.photos/id/180/200/200", // Laptop 2
+    "https://picsum.photos/id/119/200/200", // MacBook
+    "https://picsum.photos/id/160/200/200"  // Smart Phone
+];
 
-// Завдання 2: Зміна тексту
-document.getElementById("changeTextButton").onclick = function() {
-    document.getElementById("text").innerText = "Текст успішно змінено Дмитром!";
+// Завдання 3: Описи
+const descriptions = ["Робоче місце розробника", "Аналіз даних", "Ноутбук для навчання", "Мобільні технології"];
+
+const gallery = document.getElementById("gallery");
+const mainImage = document.getElementById("mainImage");
+
+// Функція для відображення галереї (Завдання 2, 3, 4)
+function renderGallery(imgArray) {
+    gallery.innerHTML = ""; // Очищуємо перед рендером
+    
+    imgArray.forEach((src, index) => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.title = descriptions[index] || "Зображення"; // Завдання 3
+        img.style.width = "100px";
+        img.style.height = "100px";
+        img.style.margin = "10px";
+        img.style.cursor = "pointer";
+        img.style.borderRadius = "5px";
+        img.style.transition = "0.3s";
+
+        // Завдання 4: Клік для перегляду
+        img.onclick = function() {
+            mainImage.src = src;
+            mainImage.style.opacity = "0";
+            setTimeout(() => { mainImage.style.opacity = "1"; }, 100);
+        };
+
+        // Ефект при наведенні
+        img.onmouseover = () => img.style.transform = "scale(1.1)";
+        img.onmouseout = () => img.style.transform = "scale(1)";
+
+        gallery.appendChild(img);
+    });
+}
+
+// Завдання 6: Сортування
+document.getElementById("sortImages").onclick = function() {
+    images.sort(); // Сортуємо масив рядків (URL)
+    renderGallery(images);
 };
 
-// Завдання 3: Додавання елементів
-document.getElementById("addParagraphButton").onclick = function() {
-    const newParagraph = document.createElement("p");
-    newParagraph.innerText = "➕ Це новий доданий абзац!";
-    newParagraph.className = "dynamic-p"; // додамо клас для зручності
-    document.getElementById("dom-tasks").appendChild(newParagraph);
+// Завдання 5: Очищення
+document.getElementById("clearGallery").onclick = function() {
+    gallery.innerHTML = "<p>Галерея порожня</p>";
+    images = []; 
+    localStorage.removeItem("images"); // Видаляємо зі сховища
 };
 
-// Завдання 4: Видалення останнього доданого елемента
-document.getElementById("removeLastParagraph").onclick = function() {
-    const paragraphs = document.getElementsByClassName("dynamic-p");
-    if (paragraphs.length > 0) {
-        paragraphs[paragraphs.length - 1].remove();
-    } else {
-        alert("Більше немає доданих абзаців для видалення!");
+// Завдання 8: Збереження у Local Storage
+function saveToLocal() {
+    localStorage.setItem("images", JSON.stringify(images));
+}
+
+// Завдання 9: Завантаження та початковий рендер
+window.addEventListener('load', () => {
+    const saved = JSON.parse(localStorage.getItem("images"));
+    if (saved && saved.length > 0) {
+        images = saved;
     }
-};
-
-// Завдання 5: Зміна фону
-document.getElementById("changeBackgroundColor").onclick = function() {
-    const colors = ["#f8fafc", "#e0f2fe", "#fef3c7", "#dcfce7"];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    document.body.style.backgroundColor = randomColor;
-};
-
-// Завдання 6: Події наведення (Hover)
-const hoverText = document.getElementById("hoverText");
-hoverText.onmouseover = function() { this.style.color = "blue"; };
-hoverText.onmouseout = function() { this.style.color = "black"; };
-
-// Завдання 7: Валідація пошти
-document.getElementById("emailForm").onsubmit = function(event) {
-    const email = document.getElementById("email").value;
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-        alert("Помилка: введіть коректну адресу!");
-        event.preventDefault();
-    } else {
-        alert("Форму відправлено успішно!");
-    }
-};
-
-// Завдання 8: Зміна атрибута SRC
-document.getElementById("changeImage").onclick = function() {
-    document.getElementById("image").src = "https://via.placeholder.com/150/2563eb/white?text=Image+2";
-};
-
-// Завдання 9: Робота з класами
-document.getElementById("addClassButton").onclick = function() {
-    document.getElementById("styledText").classList.toggle("red-bold-text");
-};
+    renderGallery(images);
+    saveToLocal(); // Оновлюємо сховище
+});
