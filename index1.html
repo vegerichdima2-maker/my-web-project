@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адаптивна блокова верстка</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section class="container box" id="forms-js-section">
+    <h2>Практична робота: Форми та Local Storage</h2>
+
+    <div class="info-card">
+        <form id="mainContactForm">
+            <div style="margin-bottom: 15px;">
+                <input type="text" id="userName" placeholder="Ваше ім'я" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
+                <input type="email" id="userEmail" placeholder="Електронна пошта" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
+                <input type="text" id="userAddress" placeholder="Адреса проживання" style="width: 100%; margin-bottom: 10px; padding: 8px;">
+                
+                <label for="dataTypeSelector">Тип даних для зв'язку:</label>
+                <select id="dataTypeSelector" style="padding: 8px; margin-bottom: 10px;">
+                    <option value="text">Текст</option>
+                    <option value="email">Електронна пошта</option>
+                    <option value="tel">Телефон</option>
+                </select>
+            </div>
+
+            <button type="submit" id="submitBtn" disabled class="tg-link" style="border:none; opacity: 0.5;">Надіслати дані</button>
+            <button type="button" id="showTypeBtn">Показати обраний тип</button>
+        </form>
+    </div>
+
+    <div class="info-card" style="margin-top: 20px;">
+        <h3>Робота з jQuery</h3>
+        <p id="jqueryText">Цей текст зміниться за допомогою магії jQuery.</p>
+        <button id="changeTextJQ">Змінити текст (JQ)</button>
+        <button id="addParJQ">Додати абзац</button>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</body>
+</html>
